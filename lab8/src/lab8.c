@@ -32,9 +32,9 @@ static void add_word_counts_in_chunk(count_map_t *map, word_t *words, size_t num
   // Make this function thread-safe by using the lock
 
   for (size_t i = 0; i < num_words; i++) {
+    pthread_mutex_lock(lock);
     word_count_entry_t *w = NULL;
     HASH_FIND_STR(*map, words[i], w);
-    pthread_mutex_lock(lock);
     if (w) {
       w->count++;
     } else {
